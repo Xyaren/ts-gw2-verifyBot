@@ -243,8 +243,8 @@ class GuildService:
     def _sort_guild_groups_using_talk_power(self, groups, ts_facade):
         with self._database.lock:
             guildgroups = [g[0] for g in self._database.cursor.execute("SELECT ts_group FROM guilds ORDER BY ts_group").fetchall()]
-        for i in range(len(guildgroups)):
-            g = next((g for g in groups if g.get("name") == guildgroups[i]), None)
+        for i, guild_group in enumerate(guildgroups):
+            g = next((g for g in groups if g.get("name") == guild_group), None)
             if g is None:
                 # error! Group deleted from TS, but not from DB!
                 LOG.warning("Found guild '%s' in the database, but no coresponding server group! Skipping this entry, but it should be fixed!", guildgroups[i])

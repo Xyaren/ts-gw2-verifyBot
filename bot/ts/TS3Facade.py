@@ -122,7 +122,7 @@ class TS3Facade:
                                        name=icon_server_path,
                                        cid=0,  # 0 = Serverwide
                                        query_resp_hook=_ts_file_upload_hook)
-                LOG.info(f"Icon {icon_local_file_name} uploaded as {icon_server_path}.")
+                LOG.info("Icon %s uploaded as %s.", icon_local_file_name, icon_server_path)
             except TS3Error as ts3error:
                 LOG.error("Error Uploading icon %s.", icon_local_file_name)
                 LOG.error(ts3error)
@@ -198,7 +198,7 @@ class TS3Facade:
         return self._ts3_connection.ts3exec(lambda t: t.query("clientgetids", cluid=client_uid).all())[0]
 
     def force_rename(self, target_nickname: str):
-        return self._ts3_connection.forceRename(target_nickname=target_nickname)
+        return self._ts3_connection.force_rename(target_nickname=target_nickname)
 
     def channel_edit(self, channel_id: str, new_channel_name: str):
         return self._ts3_connection.ts3exec(lambda tsc: tsc.exec_("channeledit", cid=channel_id, channel_name=new_channel_name), signal_exception_handler)
